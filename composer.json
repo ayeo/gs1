@@ -1,0 +1,34 @@
+{
+  "name": "ayeo/gs1",
+  "version": "1.0.0",
+  "description": "Support for GS1 system",
+  "keywords": ["gs1", "sscc", "gcp", "gln", "logistic label"],
+  "type": "library",
+  "homepage": "https://github.com/ayeo/gs1",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ayeo",
+      "email": "me@ayeo.pl",
+      "homepage": "http://ayeo.pl"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0",
+    "phpspec/phpspec": "~2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Gs1\\": "src//"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+
+}
