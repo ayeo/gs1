@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Gs1\\": "src//"
+      "Ayeo\\Gs1\\": "src//"
     }
   },
   "extra": {
