@@ -1,0 +1,172 @@
+<?php
+namespace Ayeo\Gs1;
+
+use Ayeo\Gs1\Barcode\Builder;
+use Ayeo\Gs1\Barcode\Rules\TypeA;
+
+use Ayeo\Gs1\Model\Gtin;
+use Ayeo\Gs1\Model\LogisticLabel;
+use Ayeo\Gs1\Model\Sscc;
+
+use Ayeo\Gs1\Standard\CompanyInterface;
+use Ayeo\Gs1\Standard\ContentInterface;
+use Ayeo\Gs1\Utils\CheckDigitCalculator;
+
+/**
+ * The class is a facade to all GS1 objects
+ * All you need can be gained by the object
+ */
+class Gs1Facade
+{
+    private $packageType = 1;
+
+    /**
+     * @var CompanyInterface
+     */
+    private $company;
+
+    /**
+     * @param CompanyInterface $company
+     */
+    public function __construct(CompanyInterface $company)
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * Recalculate SSCC for new logistic counter
+     *
+     * @param LogisticLabel $label
+     * @param $logisticCountNumber
+     */
+    public function rebuild(LogisticLabel $label, $logisticCountNumber)
+    {
+        $label->setSscc($this->buildSscc($logisticCountNumber));
+    }
+
+    /**
+     * @param ContentInterface $content
+     * @param $orderNumber
+     * @param $logisticCountNumber
+     * @return LogisticLabel
+     */
+    public function buildLabel(ContentInterface $content, $orderNumber, $logisticCountNumber)
+    {
+        $label = new LogisticLabel();
+        $label->setCompany($this->company);
+        $label->setContent($content);
+        $label->setSscc($this->buildSscc($logisticCountNumber));
+        $label->orderNumber = $orderNumber; //validate!
+        $label->type = $content->isCase() ? "B" : "A";
+        $label->barcode = $this->generateBarcode($label);
+
+        return $label;
+    }
+
+    /**
+     * @return string
+     */
+    public function buildGln()
+    {
+        $prefix = $this->company->getGcp();
+        $locationNumber = $this->company->getLocation()->getNumber();
+
+        //must be 13 total! fix!!!!
+        $base = sprintf('%s%02d', $prefix, $locationNumber);
+        $digit = $this->calculateCheckDigit($base);
+
+        return $base.$digit;
+
+    }
+
+    /**
+     * Builds barcode as code string
+     *
+     * @param Model\LogisticLabel $logisticLabel
+     * @return string
+     */
+    private function generateBarcode(Model\LogisticLabel $logisticLabel)
+    {
+        $rules = new TypeA();
+        $builder = new Builder();
+
+        return  $builder->build($rules->getRules($logisticLabel));
+    }
+
+    /**
+     * @param $countNumber
+     * @return Sscc
+     */
+    public function buildSscc($countNumber)
+    {
+        $left = 16 - strlen($this->company->getGcp());
+        $ssccBase = sprintf('%1s%s%0'.$left.'d', $this->packageType, (string) $this->company->getGcp(), $countNumber);
+        $checkDigit = $this->calculateCheckDigit($ssccBase);
+
+        return new Sscc($ssccBase.$checkDigit);
+    }
+
+
+    /**
+     * fixe: should be getCalculator();
+     * @param $rawNumber
+     * @return int 0-9
+     */
+    private function calculateCheckDigit($rawNumber)
+    {
+        $calculator = new CheckDigitCalculator();
+
+        return $calculator->calculate($rawNumber);
+    }
+
+    /**
+     * GS1 Packaging Types:
+     *
+     * 0 Case or carton
+     * 1 Pallet (Larger than a case)
+     * 2 Container (larger than a pallet)
+     * 3 Undefined
+     * 4 Internal company use
+     * 5-8 Reserved
+     * 9 Variable container.
+     *
+     * @param $packageType
+     */
+    public function setPackageType($packageType)
+    {
+        if (in_array($packageType, range(0, 9)) === false)
+        {
+            throw new \LogicException('Invalid GS1 Package type');
+        }
+
+        $this->packageType = $packageType;
+    }
+
+    /**
+     * @param $number
+     * @return Gtin\Gtin
+     */
+    public function buildGtin($number) //test 0075678164125
+    {
+        try
+        {
+            //todo: add other types!
+            $gtin = new Gtin\Gtin13($number);
+
+            $checkDigit = (int)substr($number, -1);
+            $rawNumber = substr($number, 0, -1);
+
+            $expectedDigit = $this->calculateCheckDigit($rawNumber);
+
+            if ($expectedDigit === $checkDigit) {
+                return $gtin;
+            }
+        }
+        catch (\Exception $e)
+        {
+            // ;D
+        }
+
+        return new Gtin\InvalidFormat($number);
+    }
+}
