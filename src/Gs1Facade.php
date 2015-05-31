@@ -4,6 +4,8 @@ namespace Ayeo\Gs1;
 use Ayeo\Gs1\Barcode\Builder;
 use Ayeo\Gs1\Barcode\Rules\TypeA;
 
+use Ayeo\Gs1\Exception\InvalidCompany;
+
 use Ayeo\Gs1\Model\Gtin;
 use Ayeo\Gs1\Model\LogisticLabel;
 use Ayeo\Gs1\Model\Sscc;
@@ -11,6 +13,7 @@ use Ayeo\Gs1\Model\Sscc;
 use Ayeo\Gs1\Standard\CompanyInterface;
 use Ayeo\Gs1\Standard\ContentInterface;
 use Ayeo\Gs1\Utils\CheckDigitCalculator;
+use Exception;
 
 /**
  * The class is a facade to all GS1 objects
@@ -26,11 +29,26 @@ class Gs1Facade
     private $company;
 
     /**
+     * @var Model\Gcp
+     */
+    private $gcp;
+
+    /**
      * @param CompanyInterface $company
+     * @throws InvalidCompany
      */
     public function __construct(CompanyInterface $company)
     {
-        $this->company = $company;
+        try
+        {
+            $this->company = $company;
+            $this->gcp = $this->company->getGcp();
+        }
+        catch (Exception $e)
+        {
+            throw new InvalidCompany;
+        }
+
     }
 
     /**
@@ -71,12 +89,10 @@ class Gs1Facade
         $prefix = $this->company->getGcp();
         $locationNumber = $this->company->getLocation()->getNumber();
 
-        //must be 13 total! fix!!!!
         $base = sprintf('%s%02d', $prefix, $locationNumber);
         $digit = $this->calculateCheckDigit($base);
 
         return $base.$digit;
-
     }
 
     /**
@@ -97,7 +113,7 @@ class Gs1Facade
      * @param $countNumber
      * @return Sscc
      */
-    public function buildSscc($countNumber)
+    private function buildSscc($countNumber)
     {
         $left = 16 - strlen($this->company->getGcp());
         $ssccBase = sprintf('%1s%s%0'.$left.'d', $this->packageType, (string) $this->company->getGcp(), $countNumber);
@@ -162,8 +178,9 @@ class Gs1Facade
                 return $gtin;
             }
         }
-        catch (\Exception $e)
+        catch (Exception $e)
         {
+            //todo invalid gtin throw
             // ;D
         }
 

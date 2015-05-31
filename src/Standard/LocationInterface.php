@@ -3,35 +3,13 @@ namespace Ayeo\Gs1\Standard;
 
 interface LocationInterface
 {
+
+    public function getAddress();
+
     /**
      * @return string
      */
     public function getLocationNumber();
-
-    /**
-     * @return string
-     */
-    public function getStreetName();
-
-    /**
-     * @return string
-     */
-    public function getBuildingNumber();
-
-    /**
-     * @return string
-     */
-    public function getTownName();
-
-    /**
-     * @return string
-     */
-    public function getPostcode();
-
-    /**
-     * @return string
-     */
-    public function getCountryName();
 
     /**
      * @return string

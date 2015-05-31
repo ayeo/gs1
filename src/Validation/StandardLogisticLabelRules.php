@@ -20,14 +20,18 @@ class StandardLogisticLabelRules extends ValidationRules
                     ['location',
                         [
                             ['locationNumber', new Constraint\Integer()],
-                            ['streetName', new Constraint\MinLength(2)],
-                            ['buildingNumber', new Constraint\MinLength(1)],
-                            ['townName', new Constraint\MinLength(5)],
-                            ['postcode', new Constraint\MinLength(2)],
-                            ['countryName', new Constraint\MinLength(2)],
                             ['telephoneNumber', new Constraint\MinLength(5)],
                             ['faxNumber', new Constraint\MinLength(5)],
                             ['websiteAddress', new Constraint\MinLength(5)],
+                            ['address',
+                                [
+                                    ['streetName', new Constraint\MinLength(2)],
+                                    ['buildingNumber', new Constraint\MinLength(1)],
+                                    ['townName', new Constraint\MinLength(5)],
+                                    ['postcode', new Constraint\MinLength(2)],
+                                    ['countryName', new Constraint\MinLength(2)]
+                                ]
+                            ]
                         ]
                     ]
                 ]
