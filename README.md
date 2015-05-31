@@ -31,7 +31,7 @@ class MyCustomCompany extends CompanyInterface
 
  
 ```php
-class MyBaseLocation extends LocationInterface
+class MyCustomLocation extends LocationInterface
 {
     public function getAddress()
     {
@@ -76,7 +76,7 @@ $content = new Model\Content;
 $content->setName('test product');
 $content->setBatchSymbol('abc12345');
 $content->setGrossWeight(2);
-$content->setGtin($gs1->buildGtin('1234512345123'));
+$content->setGtin('1234512345123');
 $content->setQuantity(120);
 $content->setBestBefore(new DateTime);
 ```
