@@ -1,6 +1,10 @@
 <?php
-namespace Ayeo\Gs1\Validation;
+namespace Ayeo\Gs1\Validator;
 
+use Ayeo\Gs1\Utils\CheckDigitCalculator;
+use Ayeo\Gs1\Validator\Constraint\GcpFormat;
+use Ayeo\Gs1\Validator\Constraint\GlnFormat;
+use Ayeo\Gs1\Validator\Constraint\Gtin\Gtin13;
 use Ayeo\Validator\Constraint;
 use Ayeo\Validator\ValidationRules;
 
@@ -15,11 +19,11 @@ class StandardLogisticLabelRules extends ValidationRules
         [
             ['company',
                 [
-                    ['gcp', new Constraint\NotNull()],
+                    ['gcp', new GcpFormat()],
                     ['name', new Constraint\MinLength(10)],
                     ['location',
                         [
-                            ['locationNumber', new Constraint\Integer()],
+                            ['gln', new GlnFormat()],
                             ['telephoneNumber', new Constraint\MinLength(5)],
                             ['faxNumber', new Constraint\MinLength(5)],
                             ['websiteAddress', new Constraint\MinLength(5)],
@@ -41,13 +45,13 @@ class StandardLogisticLabelRules extends ValidationRules
                 [
                     ['name', new Constraint\NotNull()],
 
-                    ['gtin', new Constraint\ClassInstance('\Ayeo\Gs1\Model\Gtin\Gtin')],
-                    ['gtin', new Constraint\NotClassInstance('\Ayeo\Gs1\Model\Gtin\InvalidFormat')],
+                    ['gtin', new Gtin13(new CheckDigitCalculator())],
+                    //['gtin', new Constraint\NotClassInstance('\Ayeo\Gs1\Model\Gtin\InvalidFormat')],
 
                     ['bestBefore', new Constraint\DateTimeHigherThan(new \DateTime())],
                     ['bestBefore', new Constraint\NotNull()],
                     ['quantity', new Constraint\NumericMin(1)],
-                    ['grossWeight', new Constraint\Integer(1)],
+                    ['grossWeight', new Constraint\NumericMin(1)],
                     ['batchSymbol', new Constraint\MinLength(5)]
                 ]
             ],

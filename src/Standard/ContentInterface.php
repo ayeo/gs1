@@ -38,10 +38,10 @@ interface ContentInterface
     public function getQuantity();
 
     /**
-     * @param Gtin $gtin
+     * @param string $gtin
      * @return void
      */
-    public function setGtin(Gtin $gtin);
+    public function setGtin($gtin);
 
     /**
      * @return Gtin

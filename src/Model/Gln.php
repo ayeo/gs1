@@ -1,5 +1,5 @@
 <?php
-namespace Ayeo\G1\Model;
+namespace Ayeo\Gs1\Model;
 
 /**
  * Documentation: http://en.wikipedia.org/wiki/Global_Location_Number
@@ -19,7 +19,7 @@ class Gln
      */
     public function __construct($gln)
     {
-        if (is_numeric($gln) && strlen($gln) === 13)
+        if (is_numeric((string) $gln) && strlen((string) $gln) === 13)
         {
             $this->gln = (string) $gln;
         }
@@ -35,6 +35,14 @@ class Gln
     public function __toString()
     {
         return $this->gln;
+    }
+
+    /**
+     * @return Gcp
+     */
+    public function getGcp()
+    {
+        return new Gcp(substr($this->gln, 0, -3));
     }
 
 }

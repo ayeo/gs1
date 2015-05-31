@@ -9,7 +9,7 @@ interface LocationInterface
     /**
      * @return string
      */
-    public function getLocationNumber();
+    public function getGln();
 
     /**
      * @return string

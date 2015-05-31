@@ -112,10 +112,10 @@ class Content implements ContentInterface
     }
 
     /**
-     * @param Gtin $gtin
+     * @param string $gtin
      * @return void
      */
-    public function setGtin(Gtin $gtin)
+    public function setGtin($gtin)
     {
         $this->gtin = $gtin;
     }

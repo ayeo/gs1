@@ -3,16 +3,15 @@ namespace Ayeo\Gs1;
 
 use Ayeo\Gs1\Barcode\Builder;
 use Ayeo\Gs1\Barcode\Rules\TypeA;
-
+use Ayeo\Gs1\Barcode\Rules\TypeB;
 use Ayeo\Gs1\Exception\InvalidCompany;
-
 use Ayeo\Gs1\Model\Gtin;
 use Ayeo\Gs1\Model\LogisticLabel;
 use Ayeo\Gs1\Model\Sscc;
-
 use Ayeo\Gs1\Standard\CompanyInterface;
 use Ayeo\Gs1\Standard\ContentInterface;
 use Ayeo\Gs1\Utils\CheckDigitCalculator;
+
 use Exception;
 
 /**
@@ -82,20 +81,6 @@ class Gs1Facade
     }
 
     /**
-     * @return string
-     */
-    public function buildGln()
-    {
-        $prefix = $this->company->getGcp();
-        $locationNumber = $this->company->getLocation()->getNumber();
-
-        $base = sprintf('%s%02d', $prefix, $locationNumber);
-        $digit = $this->calculateCheckDigit($base);
-
-        return $base.$digit;
-    }
-
-    /**
      * Builds barcode as code string
      *
      * @param Model\LogisticLabel $logisticLabel
@@ -103,8 +88,16 @@ class Gs1Facade
      */
     private function generateBarcode(Model\LogisticLabel $logisticLabel)
     {
-        $rules = new TypeA();
         $builder = new Builder();
+
+        if ($logisticLabel->getContent()->isCase())
+        {
+            $rules = new TypeB();
+        }
+        else
+        {
+            $rules = new TypeA();
+        }
 
         return  $builder->build($rules->getRules($logisticLabel));
     }
@@ -156,34 +149,5 @@ class Gs1Facade
         }
 
         $this->packageType = $packageType;
-    }
-
-    /**
-     * @param $number
-     * @return Gtin\Gtin
-     */
-    public function buildGtin($number) //test 0075678164125
-    {
-        try
-        {
-            //todo: add other types!
-            $gtin = new Gtin\Gtin13($number);
-
-            $checkDigit = (int)substr($number, -1);
-            $rawNumber = substr($number, 0, -1);
-
-            $expectedDigit = $this->calculateCheckDigit($rawNumber);
-
-            if ($expectedDigit === $checkDigit) {
-                return $gtin;
-            }
-        }
-        catch (Exception $e)
-        {
-            //todo invalid gtin throw
-            // ;D
-        }
-
-        return new Gtin\InvalidFormat($number);
     }
 }

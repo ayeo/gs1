@@ -5,6 +5,7 @@ use Ayeo\Gs1\Model\ApplicationIdentifier\AbstractIdentifier;
 
 /**
  * Can build barcode string based on given rules set
+ * http://en.wikipedia.org/wiki/GS1-128
  */
 class Builder
 {
