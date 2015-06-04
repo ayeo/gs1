@@ -1,6 +1,6 @@
 {
   "name": "ayeo/gs1",
-  "version": "1.0.1",
+  "version": "1.0.1-dev",
   "description": "Support for GS1 system",
   "keywords": ["gs1", "sscc", "gcp", "gln", "logistic label"],
   "type": "library",
