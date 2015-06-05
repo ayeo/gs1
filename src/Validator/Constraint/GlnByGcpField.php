@@ -3,10 +3,10 @@ namespace Ayeo\Gs1\Validator\Constraint;
 
 use Ayeo\Gs1\Model\Gcp;
 use Ayeo\Gs1\Model\Gln;
-use Ayeo\Validator\Constraint\AbstractValidator;
+use Ayeo\Validator\Constraint\AbstractConstraint;
 
 //todo rename GlnBelongsToGcp
-class GlnByGcpField extends AbstractValidator
+class GlnByGcpField extends AbstractConstraint
 {
     private $gcpFieldName;
 

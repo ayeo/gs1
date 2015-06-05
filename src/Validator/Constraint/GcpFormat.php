@@ -2,9 +2,9 @@
 namespace Ayeo\Gs1\Validator\Constraint;
 
 use Ayeo\Gs1\Model\Gcp;
-use Ayeo\Validator\Constraint\AbstractValidator;
+use Ayeo\Validator\Constraint\AbstractConstraint;
 
-class GcpFormat extends AbstractValidator
+class GcpFormat extends AbstractConstraint
 {
 
     public function validate($fieldName, $form)

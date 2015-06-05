@@ -1,38 +1,42 @@
 <?php
 namespace Ayeo\Gs1\Validator\Constraint\Gtin;
 
+use Exception;
 use Ayeo\Gs1\Model\Gtin\Gtin13 as Gtin13Model;
 use Ayeo\Gs1\Utils\CheckDigitCalculator;
-use Ayeo\Validator\Constraint\AbstractValidator;
+use Ayeo\Validator\Constraint\AbstractConstraint;
 
-class Gtin13 extends AbstractValidator
+class Gtin13 extends AbstractConstraint
 {
+    /**
+     * @param CheckDigitCalculator $calculator
+     */
     public function __construct(CheckDigitCalculator $calculator)
     {
         $this->calculator = $calculator;
     }
 
-    public function validate($fieldName, $form)
+    /**
+     * @param $value
+     */
+    public function run($value)
     {
         try
         {
-            $value = (string) $this->getFieldValue($form, $fieldName);
-
-
             $checkDigit = (int)substr($value, -1);
             $rawNumber = substr($value, 0, -1);
             $expectedDigit = $this->calculator->calculate($rawNumber);
 
             if ($expectedDigit !== $checkDigit)
             {
-                throw new \LogicException;
+                throw new Exception;
             }
 
             new Gtin13Model($value);
         }
-        catch (\LogicException $e)
+        catch (Exception $e)
         {
-            $this->error = $this->buildMessage($fieldName, 'invalid_gtin');
+            $this->addError('invalid_gtin');
         }
     }
 }

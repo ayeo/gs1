@@ -2,9 +2,9 @@
 namespace Ayeo\Gs1\Validator\Constraint;
 
 use Ayeo\Gs1\Model\Gln;
-use Ayeo\Validator\Constraint\AbstractValidator;
+use Ayeo\Validator\Constraint\AbstractConstraint;
 
-class GlnFormat extends AbstractValidator
+class GlnFormat extends AbstractConstraint
 {
 
     public function __construct()
