@@ -25,7 +25,8 @@ class GlnByGcpField extends AbstractConstraint
             $glnValue = $this->getFieldValue($form, $fieldName);
             $gln = new Gln($glnValue);
 
-            if ($gln->getGcp() != $gcp) {
+            if ($gln->getGcp() != $gcp)
+            {
                 $this->error = $this->buildMessage($fieldName, 'does_not_belongs_to', $gcp);
             }
         }
