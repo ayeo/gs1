@@ -7,18 +7,18 @@ class BarCodeSplitter
 
 	private $replacer = '***';
 
-    /**
-     * @param integer $maxLineLength
-     */
+	/**
+	 * @param integer $maxLineLength
+	 */
 	public function __construct($maxLineLength)
 	{
 		$this->maxLineLength = $maxLineLength;
 	}
 
-    /**
-     * @param string $barCode
-     * @return array
-     */
+	/**
+	 * @param string $barCode
+	 * @return array
+	 */
 	public function split($barCode)
 	{
 		$replacer = $this->replacer;
