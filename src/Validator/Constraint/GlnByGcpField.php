@@ -16,8 +16,7 @@ class GlnByGcpField extends AbstractConstraint
 
     public function run($value)
     {
-        try
-        {
+        try {
             $gcpValue = $this->getFieldValue($this->gcpFieldName);
 
             $gcp = new Gcp($gcpValue);
@@ -26,9 +25,7 @@ class GlnByGcpField extends AbstractConstraint
             if ($gln->getGcp() != $gcp) {
                 $this->addError('does_not_belongs_to', $gcp);
             }
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             //gcp or gln failed
         }
 

@@ -10,7 +10,7 @@ class GtinBox extends AbstractIdentifier
 
     public function getValue()
     {
-        return (string) $this->label->getContent()->getGtin();
+        return (string)$this->label->getContent()->getGtin();
     }
 
 

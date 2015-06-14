@@ -8,12 +8,9 @@ class GlnFormat extends AbstractConstraint
 {
     public function run($value)
     {
-        try
-        {
+        try {
             new Gln($value);
-        }
-        catch (\LogicException $e)
-        {
+        } catch (\LogicException $e) {
             $this->addError('invalid_gln');
         }
     }

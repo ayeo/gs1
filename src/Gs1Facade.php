@@ -11,7 +11,6 @@ use Ayeo\Gs1\Model\Sscc;
 use Ayeo\Gs1\Standard\CompanyInterface;
 use Ayeo\Gs1\Standard\ContentInterface;
 use Ayeo\Gs1\Utils\CheckDigitCalculator;
-
 use Exception;
 
 /**
@@ -38,13 +37,10 @@ class Gs1Facade
      */
     public function __construct(CompanyInterface $company)
     {
-        try
-        {
+        try {
             $this->company = $company;
             $this->gcp = $this->company->getGcp();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new InvalidCompany;
         }
 
@@ -59,6 +55,31 @@ class Gs1Facade
     public function rebuild(LogisticLabel $label, $logisticCountNumber)
     {
         $label->setSscc($this->buildSscc($logisticCountNumber));
+    }
+
+    /**
+     * @param $countNumber
+     * @return Sscc
+     */
+    public function buildSscc($countNumber)
+    {
+        $left = 16 - strlen($this->company->getGcp());
+        $ssccBase = sprintf('%1s%s%0' . $left . 'd', $this->packageType, (string)$this->company->getGcp(), $countNumber);
+        $checkDigit = $this->calculateCheckDigit($ssccBase);
+
+        return new Sscc($ssccBase . $checkDigit);
+    }
+
+    /**
+     * fixe: should be getCalculator();
+     * @param $rawNumber
+     * @return int 0-9
+     */
+    private function calculateCheckDigit($rawNumber)
+    {
+        $calculator = new CheckDigitCalculator();
+
+        return $calculator->calculate($rawNumber);
     }
 
     /**
@@ -90,42 +111,13 @@ class Gs1Facade
     {
         $builder = new Builder();
 
-        if ($logisticLabel->getContent()->isCase())
-        {
+        if ($logisticLabel->getContent()->isCase()) {
             $rules = new TypeB();
-        }
-        else
-        {
+        } else {
             $rules = new TypeA();
         }
 
-        return  $builder->build($rules->getRules($logisticLabel));
-    }
-
-    /**
-     * @param $countNumber
-     * @return Sscc
-     */
-    private function buildSscc($countNumber)
-    {
-        $left = 16 - strlen($this->company->getGcp());
-        $ssccBase = sprintf('%1s%s%0'.$left.'d', $this->packageType, (string) $this->company->getGcp(), $countNumber);
-        $checkDigit = $this->calculateCheckDigit($ssccBase);
-
-        return new Sscc($ssccBase.$checkDigit);
-    }
-
-
-    /**
-     * fixe: should be getCalculator();
-     * @param $rawNumber
-     * @return int 0-9
-     */
-    private function calculateCheckDigit($rawNumber)
-    {
-        $calculator = new CheckDigitCalculator();
-
-        return $calculator->calculate($rawNumber);
+        return $builder->build($rules->getRules($logisticLabel));
     }
 
     /**
@@ -143,8 +135,7 @@ class Gs1Facade
      */
     public function setPackageType($packageType)
     {
-        if (in_array($packageType, range(0, 9)) === false)
-        {
+        if (in_array($packageType, range(0, 9)) === false) {
             throw new \LogicException('Invalid GS1 Package type');
         }
 

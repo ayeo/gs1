@@ -13,16 +13,14 @@ class Gcp
 
 
     /**
-     * @param string$gcp
+     * @param string $gcp
      */
     public function __construct($gcp)
     {
         if (is_numeric($gcp) && strlen($gcp) > 5 && strlen($gcp) < 11) //with gs1 prefix
         {
-            $this->gcp = (string) $gcp;
-        }
-        else
-        {
+            $this->gcp = (string)$gcp;
+        } else {
             throw new \LogicException('Invalid GCP number');
         }
     }

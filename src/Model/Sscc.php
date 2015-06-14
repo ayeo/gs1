@@ -17,12 +17,11 @@ class Sscc
      */
     public function __construct($sscc)
     {
-        if (!(is_numeric($sscc) && strlen($sscc) === 18 ))
-        {
+        if (!(is_numeric($sscc) && strlen($sscc) === 18)) {
             throw new \Exception('Invalid SSCC');
         }
 
-        $this->sscc = (string) $sscc;
+        $this->sscc = (string)$sscc;
     }
 
     public function __toString()

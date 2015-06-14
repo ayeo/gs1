@@ -8,12 +8,9 @@ class GcpFormat extends AbstractConstraint
 {
     public function run($value)
     {
-        try
-        {
+        try {
             new Gcp((string)$value);
-        }
-        catch (\LogicException $e)
-        {
+        } catch (\LogicException $e) {
             $this->addError('invalid_gcp');
         }
     }
