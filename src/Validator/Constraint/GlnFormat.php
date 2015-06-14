@@ -6,21 +6,15 @@ use Ayeo\Validator\Constraint\AbstractConstraint;
 
 class GlnFormat extends AbstractConstraint
 {
-
-    public function __construct()
-    {
-    }
-
-    public function validate($fieldName, $form)
+    public function run($value)
     {
         try
         {
-            $glnValue = $this->getFieldValue($form, $fieldName);
-            new Gln($glnValue);
+            new Gln($value);
         }
         catch (\LogicException $e)
         {
-            $this->error = $this->buildMessage($fieldName, 'invalid_gln');
+            $this->addError('invalid_gln');
         }
     }
 }

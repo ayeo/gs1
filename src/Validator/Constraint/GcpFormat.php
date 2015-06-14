@@ -6,17 +6,15 @@ use Ayeo\Validator\Constraint\AbstractConstraint;
 
 class GcpFormat extends AbstractConstraint
 {
-
-    public function validate($fieldName, $form)
+    public function run($value)
     {
         try
         {
-            $gcp = $this->getFieldValue($form, $fieldName);
-            new Gcp((string) $gcp);
+            new Gcp((string)$value);
         }
         catch (\LogicException $e)
         {
-            $this->error = $this->buildMessage($fieldName, 'invalid_gcp');
+            $this->addError('invalid_gcp');
         }
     }
 }

@@ -5,7 +5,6 @@ use Ayeo\Gs1\Model\Gcp;
 use Ayeo\Gs1\Model\Gln;
 use Ayeo\Validator\Constraint\AbstractConstraint;
 
-//todo rename GlnBelongsToGcp
 class GlnByGcpField extends AbstractConstraint
 {
     private $gcpFieldName;
@@ -15,19 +14,17 @@ class GlnByGcpField extends AbstractConstraint
         $this->gcpFieldName = $gcpFieldName;
     }
 
-    public function validate($fieldName, $form)
+    public function run($value)
     {
         try
         {
-            $gcpValue = $this->getFieldValue($form, $this->gcpFieldName);
+            $gcpValue = $this->getFieldValue($this->gcpFieldName);
+
             $gcp = new Gcp($gcpValue);
+            $gln = new Gln($value);
 
-            $glnValue = $this->getFieldValue($form, $fieldName);
-            $gln = new Gln($glnValue);
-
-            if ($gln->getGcp() != $gcp)
-            {
-                $this->error = $this->buildMessage($fieldName, 'does_not_belongs_to', $gcp);
+            if ($gln->getGcp() != $gcp) {
+                $this->addError('does_not_belongs_to', $gcp);
             }
         }
         catch (\Exception $e)
