@@ -2,8 +2,6 @@
 namespace Ayeo\Gs1\Validator;
 
 use Ayeo\Gs1\Utils\CheckDigitCalculator;
-use Ayeo\Gs1\Validator\Constraint\GcpFormat;
-use Ayeo\Gs1\Validator\Constraint\GlnFormat;
 use Ayeo\Gs1\Validator\Constraint\Gtin\Gtin13;
 use Ayeo\Validator\Constraint;
 use Ayeo\Validator\ValidationRules;
@@ -16,7 +14,7 @@ class StandardLogisticLabelRules extends ValidationRules
     public function getRules()
     {
         return
-        [
+            [
 //            ['company',
 //                [
 //                    ['gcp', new GcpFormat()],
@@ -40,20 +38,20 @@ class StandardLogisticLabelRules extends ValidationRules
 //                    ]
 //                ]
 //            ],
-            
-            ['content',
-                [
-                    ['name', new Constraint\NotNull()],
-                    ['gtin', new Gtin13(new CheckDigitCalculator())],
-                    ['bestBefore', new Constraint\DateTimeHigherThan(new \DateTime())],
-                    ['quantity', new Constraint\NumericMin(1)],
-                    ['grossWeight', new Constraint\NumericMin(1)],
-                    ['batchSymbol', new Constraint\MinLength(5)]
-                ]
-            ],
+
+                ['content',
+                    [
+                        ['name', new Constraint\NotNull()],
+                        ['gtin', new Gtin13(new CheckDigitCalculator())],
+                        ['bestBefore', new Constraint\DateTimeHigherThan(new \DateTime())],
+                        ['quantity', new Constraint\NumericMin(1)],
+                        ['grossWeight', new Constraint\NumericMin(1)],
+                        ['batchSymbol', new Constraint\MinLength(5)]
+                    ]
+                ],
 
 //            ['orderNumber', new Constraint\NumericMin(1)],
 //            ['sscc', new Constraint\Length(18)],
-        ];
+            ];
     }
 }

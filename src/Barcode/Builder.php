@@ -18,8 +18,7 @@ class Builder
         $code = '';
 
         /* @var $rule AbstractIdentifier */
-        foreach ($rules as $rule)
-        {
+        foreach ($rules as $rule) {
             $code .= sprintf('(%s)%s', $rule->getCode(), $rule->getValue());
         }
 

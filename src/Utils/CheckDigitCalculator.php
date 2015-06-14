@@ -18,26 +18,19 @@ class CheckDigitCalculator
         $evens = [];
         $odds = [];
 
-        foreach (str_split($rawNumber) as $key => $char)
-        {
-            if ($key % 2)
-            {
+        foreach (str_split($rawNumber) as $key => $char) {
+            if ($key % 2) {
                 $evens[] = $char;
-            }
-            else
-            {
+            } else {
                 $odds[] = $char;
             }
         }
 
-        $sum = array_sum($evens) + array_sum($odds) * 3 ;
+        $sum = array_sum($evens) + array_sum($odds) * 3;
 
-        if ($sum % 10)
-        {
+        if ($sum % 10) {
             $x = 10 - ($sum % 10);
-        }
-        else
-        {
+        } else {
             $x = 0;
         }
 

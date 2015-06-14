@@ -14,7 +14,7 @@ class Content implements ContentInterface
     /**
      * @var Gtin
      */
-	private $gtin;
+    private $gtin;
 
     /**
      * @var string
@@ -29,26 +29,17 @@ class Content implements ContentInterface
     /**
      * @var integer
      */
-	private $grossWeight;
+    private $grossWeight;
 
     /**
      * @var integer
      */
-	private $count;
+    private $count;
 
     /**
      * @var \DateTime
      */
-	private $bestBefore;
-
-
-    /**
-     * @param \DateTime $datetime
-     */
-    public function setBestBefore(\DateTime $datetime)
-    {
-        $this->bestBefore = $datetime;
-    }
+    private $bestBefore;
 
     /**
      * @return \DateTime
@@ -56,6 +47,14 @@ class Content implements ContentInterface
     public function getBestBefore()
     {
         return $this->bestBefore;
+    }
+
+    /**
+     * @param \DateTime $datetime
+     */
+    public function setBestBefore(\DateTime $datetime)
+    {
+        $this->bestBefore = $datetime;
     }
 
     /**
@@ -72,18 +71,9 @@ class Content implements ContentInterface
      */
     public function setGrossWeight($grossWeight)
     {
-        $this->grossWeight = (integer) $grossWeight;
+        $this->grossWeight = (integer)$grossWeight;
 
 
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName($name)
-    {
-        $this->name = (string) $name;
     }
 
     /**
@@ -95,12 +85,21 @@ class Content implements ContentInterface
     }
 
     /**
+     * @param string $name
+     * @return void
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+    }
+
+    /**
      * @param integer $quantity
      * @return void
      */
     public function setQuantity($quantity)
     {
-        $this->count = (int) $quantity;
+        $this->count = (int)$quantity;
     }
 
     /**
@@ -112,20 +111,20 @@ class Content implements ContentInterface
     }
 
     /**
+     * @return Gtin
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+
+    /**
      * @param string $gtin
      * @return void
      */
     public function setGtin($gtin)
     {
         $this->gtin = $gtin;
-    }
-
-    /**
-     * @return Gtin
-     */
-    public function getGtin()
-    {
-        return $this->gtin;
     }
 
     /**

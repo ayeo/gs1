@@ -10,6 +10,6 @@ abstract class Gtin
 
     public function __toString()
     {
-        return (string) $this->number;
+        return (string)$this->number;
     }
 }

@@ -6,8 +6,7 @@ class Gtin13 extends Gtin
 {
     public function __construct($number)
     {
-        if (strlen($number) !== 13)
-        {
+        if (strlen($number) !== 13) {
             throw new \Exception('Invalid Gtin');
         }
 

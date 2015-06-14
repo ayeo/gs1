@@ -2,7 +2,13 @@
   "name": "ayeo/gs1",
   "version": "1.0.2",
   "description": "Support for GS1 system",
-  "keywords": ["gs1", "sscc", "gcp", "gln", "logistic label"],
+  "keywords": [
+    "gs1",
+    "sscc",
+    "gcp",
+    "gln",
+    "logistic label"
+  ],
   "type": "library",
   "homepage": "https://github.com/ayeo/gs1",
   "license": "MIT",
@@ -31,5 +37,4 @@
       "dev-master": "1.0.x-dev"
     }
   }
-
 }

@@ -10,6 +10,6 @@ class Sscc extends AbstractIdentifier
 
     public function  getValue()
     {
-        return (string) $this->label->getSscc();
+        return (string)$this->label->getSscc();
     }
 }

@@ -19,12 +19,9 @@ class Gln
      */
     public function __construct($gln)
     {
-        if (is_numeric((string) $gln) && strlen((string) $gln) === 13)
-        {
-            $this->gln = (string) $gln;
-        }
-        else
-        {
+        if (is_numeric((string)$gln) && strlen((string)$gln) === 13) {
+            $this->gln = (string)$gln;
+        } else {
             throw new \LogicException('Invalid GLN number');
         }
     }

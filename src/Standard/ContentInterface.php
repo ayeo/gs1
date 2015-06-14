@@ -61,7 +61,7 @@ interface ContentInterface
 
     /**
      * @param string $batchSymbol
-     * @return viud
+     * @return void
      */
     public function setBatchSymbol($batchSymbol);
 
