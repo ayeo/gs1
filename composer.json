@@ -20,7 +20,7 @@
     }
   ],
   "require": {
-    "ayeo/validator": "1.0.1",
+    "ayeo/validator": "1.0.x-dev",
     "php": ">=5.4.0"
   },
   "require-dev": {
