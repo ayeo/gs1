@@ -9,7 +9,7 @@ Company and Location objects
 Library is delivered only with location and company interfaces. You must use your own objects. That is done for purpose ypu probably want to work with existing classes. Example implementation below:
 
 ```php
-class MyCustomCompany extends CompanyInterface
+class MyCustomCompany implements CompanyInterface
 {
     public function getGcp()
     {
