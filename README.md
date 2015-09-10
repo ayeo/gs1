@@ -31,7 +31,7 @@ class MyCustomCompany implements CompanyInterface
 
  
 ```php
-class MyCustomLocation extends LocationInterface
+class MyCustomLocation implements LocationInterface
 {
     public function getAddress()
     {
