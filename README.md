@@ -18,7 +18,7 @@ class MyCustomCompany implements CompanyInterface
     
     public function getName()
     {
-       return "My Custom Name"
+       return "My Custom Name";
     }
     
 
