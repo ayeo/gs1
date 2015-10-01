@@ -10,6 +10,6 @@ class GrossWeight extends AbstractIdentifier
 
     public function getValue()
     {
-        return $this->label->getContent()->getGrossWeight();
+        return sprintf('%06d', $this->label->getContent()->getGrossWeight());
     }
 }

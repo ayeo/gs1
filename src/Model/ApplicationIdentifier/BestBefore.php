@@ -10,7 +10,6 @@ class BestBefore extends AbstractIdentifier
 
     public function getValue()
     {
-        //var_dump($this->label->getContent()->getBestBefore());
-        //return $this->label->getContent()->getBestBefore()->format('Ymd');
+        return $this->label->getContent()->getBestBefore()->format('ymd'); //YYMMDD
     }
 }

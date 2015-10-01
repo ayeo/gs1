@@ -10,7 +10,7 @@ class GtinUnit extends AbstractIdentifier
 
     public function getValue()
     {
-        return (string)$this->label->getContent()->getGtin();
+        return '0'.(string) $this->label->getContent()->getGtin();
     }
 
 
