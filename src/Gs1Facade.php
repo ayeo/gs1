@@ -55,6 +55,7 @@ class Gs1Facade
     public function rebuild(LogisticLabel $label, $logisticCountNumber)
     {
         $label->setSscc($this->buildSscc($logisticCountNumber));
+        $label->barcode = $this->generateBarcode($label);
     }
 
     /**
