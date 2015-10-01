@@ -71,9 +71,7 @@ class Content implements ContentInterface
      */
     public function setGrossWeight($grossWeight)
     {
-        $this->grossWeight = (integer)$grossWeight;
-
-
+        $this->grossWeight = round($grossWeight, 1);
     }
 
     /**

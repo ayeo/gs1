@@ -46,7 +46,7 @@ class StandardLogisticLabelRules extends ValidationRules
                         ['gtin', new Gtin13(new CheckDigitCalculator())],
                         ['bestBefore', new Constraint\DateTimeHigherThan(new \DateTime())],
                         ['quantity', new Constraint\NumericMin(1)],
-                        ['grossWeight', new Constraint\NumericMin(1)],
+                        ['grossWeight', new Constraint\NumericMin(0.1)],
                         ['batchSymbol', new Constraint\MinLength(5)],
                     ]
                 ],
