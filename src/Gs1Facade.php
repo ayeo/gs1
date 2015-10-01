@@ -112,10 +112,10 @@ class Gs1Facade
     {
         $builder = new Builder();
 
-        if ($logisticLabel->getContent()->isCase()) {
-            $rules = new TypeB();
-        } else {
+        if ($logisticLabel->getContent()->getQuantity() === 1) {
             $rules = new TypeA();
+        } else {
+            $rules = new TypeB();
         }
 
         return $builder->build($rules->getRules($logisticLabel));

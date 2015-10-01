@@ -4,6 +4,9 @@ namespace Ayeo\Gs1\Barcode\Rules;
 use Ayeo\Gs1\Model\ApplicationIdentifier as AI;
 use Ayeo\Gs1\Model\LogisticLabel;
 
+/**
+ * ITEM TRADE ITEM NUMBER (02)
+ */
 class TypeB extends AbstractType
 {
     /**
@@ -17,11 +20,9 @@ class TypeB extends AbstractType
                 new AI\GtinBox($label),
                 new AI\Quantity($label),
                 new AI\OrderNumber($label),
-
                 new AI\BestBefore($label),
                 new AI\GrossWeight($label),
                 new AI\Batch($label),
-
                 new AI\Sscc($label)
             ];
     }
