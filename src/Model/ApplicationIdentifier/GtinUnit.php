@@ -1,6 +1,9 @@
 <?php
 namespace Ayeo\Gs1\Model\ApplicationIdentifier;
 
+//fixme: this is not unit
+//this means that whole palet (sscc) contains just one item
+//use this if sscc items count = 1
 class GtinUnit extends AbstractIdentifier
 {
     public function getCode()
@@ -10,6 +13,6 @@ class GtinUnit extends AbstractIdentifier
 
     public function getValue()
     {
-        return "0".(string) $this->label->getContent()->getGtin();
+        return sprintf('%014d', $this->label->getContent()->getGtin());
     }
 }

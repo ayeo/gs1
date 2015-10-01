@@ -1,6 +1,8 @@
 <?php
 namespace Ayeo\Gs1\Model\ApplicationIdentifier;
 
+//fixme - this is not box!
+//this means that logistic unit contaains many sale units
 class GtinBox extends AbstractIdentifier
 {
     public function getCode()
@@ -10,7 +12,7 @@ class GtinBox extends AbstractIdentifier
 
     public function getValue()
     {
-        return "0".(string)$this->label->getContent()->getGtin();
+        return sprintf('%014d', $this->label->getContent()->getGtin());
     }
 
 
