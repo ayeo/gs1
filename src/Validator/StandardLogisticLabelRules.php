@@ -48,6 +48,7 @@ class StandardLogisticLabelRules extends ValidationRules
                         ['quantity', new Constraint\NumericMin(1)],
                         ['grossWeight', new Constraint\NumericMin(0.1)],
                         ['batchSymbol', new Constraint\MinLength(5)],
+                        ['batchSymbol', new Constraint\NoWhitespace()],
                     ]
                 ],
 
